@@ -62,9 +62,9 @@ button:hover .icon {
           <a
               :class="{
                 'flex flex-col items-center cursor-pointer w-full p-2 text-base text-blue-700 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700':
-                  pageName === 'addProduct' || pageName === 'manageItem',
+                  pageName === 'addDrug' || pageName === 'manageDrug',
                 'flex flex-col  items-center w-full p-2 cursor-pointer text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700':
-                  pageName !== 'addProduct' && pageName !== 'manageItem',
+                  pageName !== 'addDrug' && pageName !== 'manageDrug',
               }"
               aria-controls="dropdownStock"
               data-collapse-toggle="dropdownStock"
@@ -79,13 +79,13 @@ button:hover .icon {
             <li>
               <router-link :class="{
                 'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
-                  pageName === 'addProduct',
+                  pageName === 'manageDrug',
                 'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
-                  pageName !== 'addProduct',
+                  pageName !== 'manageDrug',
               }"
                            aria-current="page"
-                           to="/pocoManage/addProduct"
-                           @click="handlePage('addProduct')"
+                           to="/manageDrug/manageDrug"
+                           @click="handlePage('manageDrug')"
               >
                 <Icon class="icon" height="24" icon="mdi:drugs" width="24"/>
                 <span style="font-size: 10px">จัดการยา</span></router-link>
@@ -113,11 +113,11 @@ button:hover .icon {
                   pageName !== 'addPO',
               }"
                        aria-current="page"
-                       to="/pocoManage/addPO"
-                       @click="handlePage('addPO')"
+                       to="/manageDrug/pickupDrug"
+                       @click="handlePage('pickupDrug')"
           >
             <Icon class="icon" height="24" icon="icon-park-outline:transaction-order" width="24"/>
-            <span style="font-size: 10px">จัดการ</span></router-link>
+            <span style="font-size: 10px">เบิกยา</span></router-link>
         </li>
       </ul>
     </div>
@@ -152,7 +152,7 @@ button:hover .icon {
                   pageName !== 'dashboard',
               }"
                        aria-current="page"
-                       to="/pocoManage/dashboard"
+                       to="/manageDrug/dashboard"
                        @click="handlePage('dashboard')"
           >
             <Icon class="icon-right" height="24" icon="tabler:home" width="24"/>
@@ -163,9 +163,9 @@ button:hover .icon {
           <a
               :class="{
                 'flex cursor-pointer items-center w-full p-2  text-base text-blue-600 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700':
-                  pageName === 'addProduct' || pageName === 'manageItem',
+                  pageName === 'addDrug' || pageName === 'manageDrug',
                 'flex cursor-pointer items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700':
-                  pageName !== 'addProduct' && pageName !== 'manageItem',
+                  pageName !== 'addDrug' && pageName !== 'manageDrug',
               }"
             @click="rotate(activesIcon)"
               aria-controls="dropdownStock2"
@@ -173,7 +173,7 @@ button:hover .icon {
               type="button"
           >
             <Icon class="icon-right" height="24" icon="fluent-mdl2:product-variant" width="24"/>
-            <span class="ml-3  icon-right">จัดการสินค้า</span>
+            <span class="ml-3  icon-right">คลังยา</span>
             <Icon  height="24" icon="mingcute:down-fill" :class="{
               'ml-12 ':activesIcon === 'down',
               'ml-12 rotate-90':activesIcon === 'up'
@@ -184,47 +184,47 @@ button:hover .icon {
             <li>
               <router-link :class="{
                 'flex items-center w-full p-2 text-blue-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700':
-                  pageName === 'addProduct',
+                  pageName === 'manageDrug',
                 'flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700':
-                  pageName !== 'addProduct',
+                  pageName !== 'manageDrug',
               }"
                            aria-current="page"
-                           to="/pocoManage/addProduct"
-                           @click="handlePage('addProduct')"
+                           to="/manageDrug/manageDrug"
+                           @click="handlePage('manageDrug')"
               >
-                <Icon class="icon mr-2" height="24" icon="icon-park-outline:excel" width="24"/>
-                อัปโหลดไฟล์
+                <Icon class="icon  mr-2" height="24" icon="mdi:drugs" width="24"/>
+                จัดการยา
               </router-link>
             </li>
             <li>
               <router-link :class="{
                 'flex items-center w-full p-2 text-blue-600 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700':
-                  pageName === 'manageItem',
+                  pageName === 'addDrug',
                 'flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700':
-                  pageName !== 'manageItem',
+                  pageName !== 'addDrug',
               }"
                            aria-current="page"
-                           to="/pocoManage/manageItem"
-                           @click="handlePage('manageItem')"
+                           to="/manageDrug/addDrug"
+                           @click="handlePage('addDrug')"
               >
-                <Icon class="icon mr-2" height="24" icon="uil:setting" width="24"/>
-                จัดการสินค้า
+                <Icon class="icon mr-2" height="24" icon="gridicons:add-outline" width="24"/>
+                เพิ่มยา
               </router-link>
             </li>
           </ul>
 
           <router-link :class="{
                 'flex items-center p-2  group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
-                  pageName === 'addPO',
+                  pageName === 'pickupDrug',
                 'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
-                  pageName !== 'addPO',
+                  pageName !== 'pickupDrug',
               }"
                        aria-current="page"
-                       to="/pocoManage/addPO"
-                       @click="handlePage('addPO')"
+                       to="/manageDrug/pickupDrug"
+                       @click="handlePage('pickupDrug')"
           >
             <Icon class="icon-right" height="24" icon="icon-park-outline:transaction-order" width="24"/>
-            <span class="ml-3 icon-right">จัดการใบสั่งซื้อ</span></router-link>
+            <span class="ml-3 icon-right">เบิกยา</span></router-link>
 
         </li>
 
