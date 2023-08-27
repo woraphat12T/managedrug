@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '../stores';
-import zortRoutes from './zort.router'
-import pocoRoutes from './poco.router'
+import zortRoutes from './managedrug.router'
+
 
 const routes = [
-  { path: '/:id/login', name: 'Login', component: () => import('../authentication/login.vue'), props: true },
-  { path: '/home', component: () => import('../views/home.vue') },
+  { path: '/', name: 'Login', component: () => import('../authentication/login.vue'), props: true },
   { ...zortRoutes },
-  { ...pocoRoutes },
   {
     path: '/logout',
     name: 'Logout',
@@ -15,10 +13,10 @@ const routes = [
         const authStore = useAuthStore();
         authStore.logout();
         // next({ name: '/login' });
-        window.location.href = "http://58.181.206.156:8080/12Trading/";
+        window.location.href = "http://localhost:5173/";
       },
   },
-  { path: '/:pathMatch(.*)*', redirect: '/' }
+  { path: '/:pathMatch(.*)*', redirect: '/' } 
 ];
 
 const router = createRouter({
@@ -26,15 +24,15 @@ const router = createRouter({
   routes
 });
 
-// router.beforeEach(async (to) => {
-//     const publicPages = ['/'];
-//     const authRequired = !publicPages.includes(to.path);
-//     const authStore = useAuthStore();
+router.beforeEach(async (to) => {
+    const publicPages = ['/'];
+    const authRequired = !publicPages.includes(to.path);
+    const authStore = useAuthStore();
 
-//     if (authRequired && !authStore.user) {
-//         authStore.returnUrl = to.fullPath;
-//         return '/';
-//     }
-// });
+    if (authRequired && !authStore.user) {
+        authStore.returnUrl = to.fullPath;
+        return '/';
+    }
+});
 
 export default router;

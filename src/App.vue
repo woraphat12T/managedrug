@@ -1,5 +1,16 @@
+<script setup>   
+import { useAuthStore } from './stores'
+
+const authStore = useAuthStore();
+
+</script>
+
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+    <div :class="authStore.user">
+        <routerView />
+    </div>
 </template>
+
+<style>
+
+</style>
