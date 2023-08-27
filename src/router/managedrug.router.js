@@ -1,14 +1,9 @@
 export default {
-    path: '/onlineManage',
-    component: () => import('../views/zort/layout.vue'),
-    redirect: '/onlineManage/dashboard',
+    path: '/manageDrug',
+    component: () => import('../views/manageDrug/layout.vue'),
+    redirect: '/manageDrug/dashboard',
     children: [
-        { path: '/onlineManage/dashboard', component: () => import('../views/zort/dashboard.vue') },
-        { path: '/onlineManage/order/all', component: () => import('../views/zort/orderZortAll.vue') },
-        { path: '/onlineManage/order/inv', component: () => import('../views/zort/orderZort.vue') },
-        { path: '/onlineManage/order/reciept', component: () => import('../views/zort/orderZort.vue') },
-        { path: '/onlineManage/order/erp', component: () => import('../views/zort/orderZortErp.vue') },
-        { path: '/onlineManage/stock/zort', component: () => import('../views/zort/stockZort.vue') },
-        { path: '/onlineManage/stock/erp', component: () => import('../views/zort/stockERP.vue') }
+        { path: '/manageDrug/dashboard', component: () => import('../views/manageDrug/dashboard.vue') },
+        { path: '/manageDrug/addDrug', component: () => import('../views/manageDrug/addDrug.vue') },
     ]
 };  

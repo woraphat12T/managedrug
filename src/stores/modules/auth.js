@@ -15,8 +15,8 @@ export const useAuthStore = defineStore("auth", {
     async login(userLogin, passwordLogin) {
       try {
         const response = await axios.post(
-          import.meta.env.VITE_API_BASE_URL + "/12Trading/loginAnt",
-          { username: userLogin, password: passwordLogin },
+          import.meta.env.VITE_API_BASE_URL + "/drug/user/login",
+          { userName: userLogin, passWord: passwordLogin },
           {
             headers: { "Content-Type": "application/json" },
           }

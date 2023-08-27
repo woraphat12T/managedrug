@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '../stores';
-import zortRoutes from './managedrug.router'
+import managedrugRoutes from './managedrug.router'
 
 
 const routes = [
   { path: '/', name: 'Login', component: () => import('../authentication/login.vue'), props: true },
-  { ...zortRoutes },
+  { ...managedrugRoutes },
   {
     path: '/logout',
     name: 'Logout',

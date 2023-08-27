@@ -8,8 +8,10 @@
 import { useAuthStore } from '../../stores';
 // import { useRouter } from 'vue-router'
 import router from "../../router";
-import Header from '../../components/header.vue';
+import Header from '../../components/headerPOco.vue';
 import SidebarOnline from './sidebar.vue';
+import {computed, onMounted} from "vue";
+
 export default {
   components: {
     Header,
@@ -17,9 +19,21 @@ export default {
   },
   setup() {
     const authStore = useAuthStore();
-    if (!authStore.user) {
-      router.push('/');
-    }
+
+    const resStatus = computed(() => {
+      return authStore.statusToken;
+    });
+    onMounted(() => {
+      authStore.Authen();
+    });
+
+    console.log('statusToken :' + resStatus.value)
+    // if (resStatus.value === 200) {
+    //
+    // }else {
+    //   router.push('/');
+    // }
+
 
     // const authStore = useAuthStore();
     // const router = useRouter()
