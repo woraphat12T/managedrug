@@ -13,22 +13,4 @@
   </div>
 </template>
 <script>
-import { onMounted, computed } from "vue";
-// import { useDashboardStore } from "../../stores";
-// export default {
-//   setup() {
-//     const store = useDashboardStore();
-//     const dashboardData = computed(() => {
-//       return store.zortDashboard;
-//     });
-//
-//     onMounted(() => {
-//       store.getDashboard();
-//     });
-//
-//     return {
-//       dashboardData,
-//     };
-//   },
-// };
 </script>
