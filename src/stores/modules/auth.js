@@ -25,7 +25,10 @@ export const useAuthStore = defineStore("auth", {
         if (user) {
           this.user = user;
           this.token = user.token
+          this.id = user.id
           localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("idUser", JSON.stringify(user.id));
+          localStorage.setItem("fname", JSON.stringify(user.fullname));
           localStorage.setItem("token", JSON.stringify(user.token));
         } else {
           this.logout();

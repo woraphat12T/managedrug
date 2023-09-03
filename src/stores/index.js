@@ -1,3 +1,6 @@
 export * from './modules/auth'
 export * from './modules/page'
 export * from './modules/getDrug'
+export * from './modules/Cart'
+export * from './modules/requis'
+export * from './modules/history'
