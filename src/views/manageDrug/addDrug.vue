@@ -126,6 +126,11 @@
           <div class="ml-8 overflow-y-scroll" style="height: 450px">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <TableItem :columns=tableColumns :data=filteredItems>
+                <template v-slot:nameDrug="{ row }">
+                <div class="text-left">
+                  {{ row.nameDrug }}
+                </div>
+                </template>
               </TableItem>
             </table>
           </div>

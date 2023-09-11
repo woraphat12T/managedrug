@@ -106,14 +106,14 @@
                   <template v-slot:balanceStock="{ row }">
 
                       <span
-                          class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{
+                          class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{
                           row.balanceStock
                         }}</span>
 
                   </template>
                   <template v-slot:stock="{ row }">
                     <span
-                        class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"> -{{
+                        class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"> +{{
                         row.stock
                       }}</span>
 
@@ -137,10 +137,10 @@
                 เคลียร์ข้อมูล
               </button>
               <button
-                  class=" flex justify-center items-center w-24 h-8  text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xs px-5 py-2.5 mr-2"
+                  class=" flex justify-center items-center w-32 h-8  text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xs px-5 py-2.5 mr-2"
                   type="button"
                   @click="showCreateAction">
-                สร้างใบเบิก
+                สร้างใบรับยา
               </button>
             </div>
           </div>
@@ -159,7 +159,7 @@
         <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
           <Icon class="mr-3" icon="emojione-v1:document" width="24"/>
           <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            สร้างใบเบิก
+            สร้างใบรับยา
           </h3>
           <button
               class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -172,7 +172,7 @@
         <!-- Modal body -->
         <div class="p-6 space-y-6">
           <div class="flex flex-row justify-between">
-            <div><span class="mr-5">เลขที่ : 1/66</span><span>ผู้เบิก : {{ fullname }}</span></div>
+            <div><span class="mr-5">เลขที่ : 1/66</span><span>ผู้รับ : {{ fullname }}</span></div>
 
 <!--            <div>วันที่ : {{ formattedDate }}</div>-->
             <div>วันที่ :
@@ -181,7 +181,7 @@
           </div>
           <div class="border-b"></div>
           <div class="flex flex-row justify-center">
-            <div>สรุปรายการเบิก</div>
+            <div>สรุปรายการรับยา</div>
           </div>
           <div class="flex flex-row justify-center w-full">
             <div class="h-[300px] w-[650px] overflow-y-scroll mt-0 mb-1 m-2">
@@ -196,24 +196,13 @@
               </table>
             </div>
           </div>
-          <div class="flex flex-row">
-            <span class="w-3/5">จำนวนยาที่เบิก : {{ CartData.length }} </span>
-            <select id="PayUser"
-                    v-model="PayUser"
-                    @change="changePayUser"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-              <option selected disabled>เลือกผู้จ่ายยา</option>
-              <option value="นางวิชชุดา เชื้อแป้น">นางวิชชุดา เชื้อแป้น</option>
-              <option value="นางสาวทำรงรักษ์ สีท้าว">นางสาวทำรงรักษ์ สีท้าว</option>
-            </select>
-          </div>
         </div>
         <!-- Modal footer -->
         <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
           <button
               class=" flex justify-center items-center w-24 h-8  text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xs px-5 py-2.5 mr-1"
               type="button"
-              @click="addRequis(PayUsers)"
+              @click="addReceipt(PayUsers)"
           >
             บันทึก
           </button>
@@ -232,7 +221,7 @@
 import TableItem from '../../components/table.vue';
 import TableCart from '../../components/table.vue';
 import Table from '../../components/table.vue';
-import {useDataCartStore, useGetDrug, useRequisData} from '../../stores'
+import {useDataCartStore, useGetDrug, useRecieptData} from '../../stores'
 import {computed, onMounted, ref} from "vue";
 import {Icon} from '@iconify/vue';
 import Search from "@/components/Search.vue";
@@ -270,7 +259,7 @@ export default {
 
     const getDrugSe = useGetDrug();
     const getCart = useDataCartStore();
-    const Requis = useRequisData();
+    const Receipt = useRecieptData();
 
     const drug = computed(() => {
       return getDrugSe.showSelectDrug;
@@ -285,7 +274,7 @@ export default {
       return [
         {id: 'nameDrug', title: 'ชื่อยา'},
         {id: 'balanceStock', title: 'คลัง'},
-        {id: 'stock', title: 'จำนวนที่เบิก'},
+        {id: 'stock', title: 'จำนวนที่รับ'},
         {id: 'lastStock', title: 'คงเหลือ'},
         {id: 'drugId', title: '#'}
       ];
@@ -318,18 +307,10 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: async (stock) => {
           if (!stock) {
-            Swal.showValidationMessage('กรุณากรอกจำนวนที่ต้องการเบิก');
+            Swal.showValidationMessage('กรุณากรอกจำนวนที่ต้องการรับ');
           } else {
             if (!isNaN(parseInt(stock))) {
-              if (parseInt(stocks) >= parseInt(stock)) {
-                if (parseInt(stock) === 0) {
-                  Swal.showValidationMessage('กรุณากรอกจำนวนที่ต้องการเบิก');
-                } else {
-                  return await getCart.addCart(id, stock);
-                }
-              } else {
-                Swal.showValidationMessage('ไม่สามารถเบิกเกินจำนวนคงเหลือ!!!');
-              }
+                  return await getCart.addCartRec(id, stock);
             } else {
               Swal.showValidationMessage('กรุณากรอกตัวเลขเท่านั้น');
             }
@@ -339,17 +320,17 @@ export default {
         allowOutsideClick: () => !Swal.isLoading()
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await getDrugSe.getDrugToSelect();
-          await getCart.getCart();
+          await getDrugSe.getDrugToSelectRec();
+          await getCart.getCartRec();
         }
       })
     }
 
     const deleteCart = async (id) => {
       console.log(id)
-      await getCart.deleteCart(id)
-      await getDrugSe.getDrugToSelect();
-      await getCart.getCart();
+      await getCart.deleteCartRec(id)
+      await getDrugSe.getDrugToSelectRec();
+      await getCart.getCartRec();
 
     }
 
@@ -379,8 +360,8 @@ export default {
 
 
     onMounted(async () => {
-      await getDrugSe.getDrugToSelect();
-      await getCart.getCart()
+      await getDrugSe.getDrugToSelectRec();
+      await getCart.getCartRec()
     })
 
     const fullname = ref(JSON.parse(localStorage.getItem("fname")))
@@ -396,12 +377,12 @@ export default {
       return `${year}-${month}-${day}`;
     });
     const smallInput = ref(null);
-    const addRequis = (PayUsers) => {
+    const addReceipt = (PayUsers) => {
       console.log(PayUsers)
       const inputValue = smallInput.value.value;
-      console.log(inputValue);
+      console.log('inputValue :: '+inputValue);
       Swal.fire({
-        title: 'ยืนยันการเบิกยา',
+        title: 'ยืนยันการรับยา',
         text: "กรุณากดยืนยันเพื่อดำเนินการต่อ",
         icon: 'warning',
         showCancelButton: true,
@@ -421,9 +402,9 @@ export default {
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            await Requis.addRequis(PayUsers,inputValue);
-            await getDrugSe.getDrugToSelect();
-            await getCart.getCart()
+            await Receipt.addReciept(inputValue);
+            await getDrugSe.getDrugToSelectRec();
+            await getCart.getCartRec()
             showcreate.value = false
 
           } catch (error) {
@@ -454,7 +435,7 @@ export default {
       tableColumns,
       tableColumnsCart,
       drug,
-      addRequis,
+      addReceipt,
       changePayUser,
       addCart,
       showCreateAction,

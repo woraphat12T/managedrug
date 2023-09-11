@@ -71,7 +71,7 @@
       </div>
       <div class="ml-8 overflow-y-scroll h-[454px]">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <TableItem :columns=tableColumns :data=Drug>
+          <TableItem :columns=tableColumns :data=filteredDrug>
             <template v-slot:nameDrug="{ row }">
               <span class="text-start flex justify-start">
                 {{ row.nameDrug }}
@@ -79,21 +79,30 @@
 
 
             </template>
-            <template v-slot:action="{ row }">
+            <template v-slot:status="{ row }">
               <button
                   class="text-white bg-yellow-400 hover:bg-yellow-500 font-medium rounded-lg text-xs w-12 mr-1 py-0.5"
                   type="button">
                 แก้ไข
               </button>
-              <button
+              <button v-if="row.status === 'open'"
+                      @click="updateStatus('open',row.id)"
+                      class="text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xs w-12 py-0.5 mr-1 dark:bg-green-600 dark:hover:bg-green-700"
+                      type="button">
+
+                เปิด
+              </button>
+              <button v-else
+                      @click="updateStatus('close',row.id)"
                   class="text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-xs w-12 py-0.5 mr-1  dark:bg-red-600 dark:hover:bg-red-700 "
                   type="button">
                 ปิด
               </button>
               <button
-                  class="text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xs w-12 py-0.5 dark:bg-green-600 dark:hover:bg-green-700"
-                  type="button">
-                เปิด
+                  class="text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-xs px-4 mb-1 py-0.5 align-middle"
+                  type="button"
+                  @click="showCreateAction(row.runnumber)">
+                <Icon icon="vscode-icons:file-type-pdf2" width="16"/>
               </button>
             </template>
           </TableItem>
@@ -104,11 +113,11 @@
 </template>
 <script>
 import {Icon} from '@iconify/vue';
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
 import TableItem from '../../components/table.vue'
 import SelectOption from "../../components/selectoption.vue";
 import SearchOrder from "../../components/Search.vue";
-import {useGetDrug} from "@/stores/index.js";
+import {useGetDrug,useManageDrug} from "@/stores/index.js";
 
 
 export default {
@@ -128,23 +137,53 @@ export default {
         {id: 'doseType', title: 'หน่วย'},
         {id: 'pricePerQty', title: 'ราคาต่อหน่วย'},
         {id: 'stock', title: 'คงเหลือ'},
-        {id: 'action', title: '#'},
+        {id: 'status', title: '#'},
       ];
     });
 
     const getDurg = useGetDrug();
+    const manageDrug = useManageDrug() ;
 
     const Drug = computed(() => {
       return getDurg.showGetDrug;
     });
 
+    // search bar start
+    const textInput = ref("");
+    const filteredDrug = computed(() => {
+      if (!textInput.value) {
+        return Drug.value;
+      }
+      const keyword = textInput.value.toLowerCase();
+      return Drug.value.filter(
+          (item) =>
+              item.nameDrug.toLowerCase().includes(keyword) ||
+              item.qtyType.toLowerCase().includes(keyword)
+      );
+    });
+
+    const handleSearch = (searchText) => {
+      textInput.value = searchText;
+      console.log(searchText)
+    };
+    
+    const updateStatus =async (nowStatus,idDrug) => {
+      console.log(nowStatus,'::::',idDrug)
+      await manageDrug.updateStatus(idDrug,nowStatus)
+      await getDurg.getDrugToShowDrug();
+    }
+
     onMounted(() => {
-      getDurg.getDrugToAddDrug();
+      getDurg.getDrugToShowDrug();
     });
 
     return {
+      textInput,
+      filteredDrug,
       tableColumns,
-      Drug
+      Drug,
+      handleSearch,
+      updateStatus
     }
   },
 

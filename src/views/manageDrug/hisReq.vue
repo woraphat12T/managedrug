@@ -3,45 +3,45 @@
     <div class="p-4 mt-8">
       <div class="ml-8">
         <div class=" mb-1 border-b border-gray-200 dark:border-gray-700 ml-8">
-          <!--          <ul id="myTab" class="flex flex-wrap -mb-px text-sm font-medium text-center justify-between"-->
-          <!--              data-tabs-toggle="#myTabContent" role="tablist">-->
-          <!--            <div ref="" class="flex flex-row">-->
-          <!--              <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">-->
-          <!--                <li class="mr-2">-->
-          <!--                  <a-->
-          <!--                      :class="{-->
-          <!--                'inline-block p-3 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500':-->
-          <!--                  tabs === 'all',-->
-          <!--                'inline-block p-3 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-500 dark:hover:text-gray-300':-->
-          <!--                  tabs !== 'all',-->
-          <!--              }"-->
-          <!--                      aria-current="page"-->
-          <!--                      href="#"-->
-          <!--                      @click="handleTabs('all')"-->
-          <!--                  >ประวัติการเบิก</a-->
-          <!--                  >-->
-          <!--                </li>-->
-          <!--                <li class="mr-2">-->
-          <!--                  <a-->
-          <!--                      :class="{-->
-          <!--                'inline-block p-3 text-blue-600 border-b-2 border-blue-600 rounded-t-lg  dark:text-blue-500 dark:border-blue-500':-->
-          <!--                  tabs === 'CR',-->
-          <!--                'inline-block p-3 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-500 dark:hover:text-gray-300':-->
-          <!--                  tabs !== 'CR',-->
-          <!--              }"-->
-          <!--                      href="#"-->
-          <!--                      @click="handleTabs('CR')"-->
-          <!--                  >ประวัติการรับเข้า</a-->
-          <!--                  >-->
-          <!--                </li>-->
-          <!--              </ul>-->
-          <!--            </div>-->
-          <!--            <SearchOrder :searchBar="textInput" @search="handleSearch"/>-->
-          <!--          </ul>-->
+            <ul id="myTab" class="flex flex-wrap -mb-px text-sm font-medium text-center justify-between"
+                data-tabs-toggle="#myTabContent" role="tablist">
+              <div ref="" class="flex flex-row">
+                <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+                  <li class="mr-2">
+                    <a
+                        :class="{
+                  'inline-block p-3 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500':
+                    tabs === 'req',
+                  'inline-block p-3 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-500 dark:hover:text-gray-300':
+                    tabs !== 'req',
+                }"
+                        aria-current="page"
+                        href="#"
+                        @click="handleTabs('req')"
+                    >ประวัติการเบิก</a
+                    >
+                  </li>
+                  <li class="mr-2">
+                    <a
+                        :class="{
+                  'inline-block p-3 text-blue-600 border-b-2 border-blue-600 rounded-t-lg  dark:text-blue-500 dark:border-blue-500':
+                    tabs === 'rec',
+                  'inline-block p-3 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-blue-500 dark:hover:text-gray-300':
+                    tabs !== 'rec',
+                }"
+                        href="#"
+                        @click="handleTabs('rec')"
+                    >ประวัติการรับเข้า</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <SearchOrder :searchBar="textInput" @search="handleSearch"/>
+            </ul>
         </div>
         <div class="ml-8 overflow-y-scroll h-[454px]">
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <TableReq :columns="tableColumns" :data="hisReq">
+            <TableReq :columns="tableColumns" :data="filteredHis">
               <template v-slot:count2="{ row }">
                 <button
                     class="text-white mr-2 bg-blue-700 hover:bg-blue-800 font-medium items-center align-middle rounded-lg text-sm px-5 py-0.5"
@@ -197,11 +197,41 @@ export default {
 
       }
     }
+    const tabs = ref("req");
+    const handleTabs = async (tabName) => {
+      tabs.value = tabName;
+      await getHisreq.setTab(tabs.value)
+      console.log("tabs value after click:", tabs.value);
+
+    };
+
+    // search bar start
+    const textInput = ref("");
+    const filteredHis = computed(() => {
+      if (!textInput.value) {
+        return hisReq.value;
+      }
+      const keyword = textInput.value.toLowerCase();
+      return hisReq.value.filter(
+          (item) =>
+              item.runnumber.toLowerCase().includes(keyword) ||
+              item.dateReq.toLowerCase().includes(keyword) ||
+              item.user.toLowerCase().includes(keyword)
+      );
+    });
+
+    const handleSearch = (searchText) => {
+      textInput.value = searchText;
+     // console.log(searchText)
+    };
 
 
     return {
+      textInput,
+      filteredHis,
       hisReqDetailHead,
       ruuno,
+      tabs,
       user,
       dateHis,
       hisReqDetail,
@@ -210,6 +240,8 @@ export default {
       hisReq,
       tableColumns,
       showCreateAction,
+      handleTabs,
+      handleSearch
     }
   }
 }

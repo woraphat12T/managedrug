@@ -12,7 +12,7 @@ export const useGetDrug = defineStore("GetDrug", {
                 const token = JSON.parse(localStorage.getItem("token"));
                 const response = await axios.post(
                     import.meta.env.VITE_API_BASE_URL +
-                    "/drug/drug/getDrug",
+                    "/drug/drug/getDrugAdd",
                     {
                     },
                     {
@@ -25,6 +25,24 @@ export const useGetDrug = defineStore("GetDrug", {
                 console.log(error);
             }
         },
+        async getDrugToShowDrug() {
+            try {
+                const token = JSON.parse(localStorage.getItem("token"));
+                const response = await axios.post(
+                    import.meta.env.VITE_API_BASE_URL +
+                    "/drug/drug/getDrug",
+                    {
+                    },
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
+                );
+                this.showGetDrug = response.data;
+                // console.log("showGetDrug", this.showGetDrug);
+            } catch (error) {
+                console.log(error);
+            }
+        },
         async getDrugToSelect() {
             try {
                 const token = JSON.parse(localStorage.getItem("token"));
@@ -32,6 +50,26 @@ export const useGetDrug = defineStore("GetDrug", {
                 const response = await axios.post(
                     import.meta.env.VITE_API_BASE_URL +
                     "/drug/drug/getDrugSelect",
+                    {
+                        userId:idUser
+                    },
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
+                );
+                this.showSelectDrug = response.data;
+                // console.log("showGetDrug", this.showGetDrug);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async getDrugToSelectRec() {
+            try {
+                const token = JSON.parse(localStorage.getItem("token"));
+                const idUser = JSON.parse(localStorage.getItem("idUser"));
+                const response = await axios.post(
+                    import.meta.env.VITE_API_BASE_URL +
+                    "/drug/drug/getDrugSelectRec",
                     {
                         userId:idUser
                     },

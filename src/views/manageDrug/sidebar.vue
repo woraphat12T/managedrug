@@ -120,6 +120,18 @@ button:hover .icon {
             <span style="font-size: 10px">เบิกยา</span></router-link>
           <router-link :class="{
                 'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                  pageName === 'recieptDrug',
+                'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                  pageName !== 'recieptDrug',
+              }"
+                       aria-current="page"
+                       to="/manageDrug/recieptDrug"
+                       @click="handlePage('recieptDrug')"
+          >
+            <Icon class="icon" height="24" icon="fluent:receipt-add-20-regular" width="24"/>
+            <span style="font-size: 10px">รับยา</span></router-link>
+          <router-link :class="{
+                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName === 'hisReq',
                 'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
                   pageName !== 'hisReq',
@@ -130,6 +142,19 @@ button:hover .icon {
           >
             <Icon class="icon" height="24" icon="material-symbols:history-edu" width="24"/>
             <span style="font-size: 10px">ประวัติ</span></router-link>
+
+          <router-link :class="{
+                'flex justify-center rounded-lg flex-col items-center p-2 active:text-blue-500 group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                  pageName === 'exportdrughistory',
+                'flex items-center p-2 flex-col justify-center active:text-blue-500 rounded-lg group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                  pageName !== 'exportdrughistory',
+              }"
+                       aria-current="page"
+                       to="/manageDrug/exportdrughistory"
+                       @click="handlePage('exportdrughistory')"
+          >
+            <Icon class="icon" height="24" icon="ph:file-pdf-duotone" width="24"/>
+            <span style="font-size: 10px">ประวัติยา</span></router-link>
         </li>
       </ul>
     </div>
@@ -237,6 +262,30 @@ button:hover .icon {
           >
             <Icon class="icon-right" height="24" icon="icon-park-outline:transaction-order" width="24"/>
             <span class="ml-3 icon-right">เบิกยา</span></router-link>
+          <router-link :class="{
+                'flex items-center p-2  group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                  pageName === 'recieptDrug',
+                'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                  pageName !== 'recieptDrug',
+              }"
+                       aria-current="page"
+                       to="/manageDrug/recieptDrug"
+                       @click="handlePage('recieptDrug')"
+          >
+            <Icon class="icon-right" height="24" icon="fluent:receipt-add-20-regular" width="24"/>
+            <span class="ml-3 icon-right">รับยา</span></router-link>
+          <router-link :class="{
+                'flex items-center p-2  group text-blue-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                  pageName === 'hisReq',
+                'flex items-center p-2  group text-gray-800-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-100':
+                  pageName !== 'hisReq',
+              }"
+                       aria-current="page"
+                       to="/manageDrug/hisReq"
+                       @click="handlePage('hisReq')"
+          >
+            <Icon class="icon-right" height="24" icon="material-symbols:history-edu" width="24"/>
+            <span class="ml-3 icon-right">ประวัติการเบิก-รับยา</span></router-link>
 
         </li>
 

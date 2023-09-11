@@ -6,9 +6,20 @@ export const useHisData = defineStore("getHis", {
     state: () => ({
         showGetHisReq: [],
         showGetHisReqDetail: [],
-        showGetHisReqDetailHead: []
+        showGetHisReqDetailHead: [],
+        tabName:'req'
     }),
     actions: {
+        setTab(tabName) {
+            this.tabName = tabName;
+            if(tabName === 'req'){
+                this.getReq();
+            }else{
+                this.getRec();
+            }
+
+
+        },
         async getReq() {
             try {
                 const token = JSON.parse(localStorage.getItem("token"));
@@ -53,6 +64,7 @@ export const useHisData = defineStore("getHis", {
                     import.meta.env.VITE_API_BASE_URL +
                     "/drug/requis/getDetailRequisHead",
                     {
+
                         runno:runno
                     },
                     {
@@ -64,6 +76,26 @@ export const useHisData = defineStore("getHis", {
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+
+        //rec
+        async getRec() {
+            try {
+                const token = JSON.parse(localStorage.getItem("token"));
+                const response = await axios.post(
+                    import.meta.env.VITE_API_BASE_URL +
+                    "/drug/Receipt/getReciept",
+                    {
+                    },
+                    {
+                        headers: { Authorization: `Bearer ${token}` },
+                    }
+                );
+                this.showGetHisReq = response.data;
+                // console.log("showGetDrug", this.showGetDrug);
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
 });
