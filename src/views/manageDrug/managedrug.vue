@@ -183,7 +183,7 @@
 
                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                              :value=DrugEdit[0].qty
-                             required type="text">
+                             required type="number">
                     </div>
                     <div class="w-1/2 pl-2">
                       <label class="block mb-2 w-full text-sm font-medium text-gray-900 dark:text-white"
@@ -266,6 +266,7 @@ export default {
       return [
         {id: 'id', title: 'ลำดับ'},
         {id: 'nameDrug', title: 'ชื่อยา'},
+        {id: 'dose', title: 'หน่วยนับ'},
         {id: 'doseType', title: 'หน่วย'},
         {id: 'pricePerQty', title: 'ราคาต่อหน่วย'},
         {id: 'stock', title: 'คงเหลือ'},
