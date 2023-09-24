@@ -66,7 +66,7 @@
                               type="button"
                               @click="addCart(row.id,row.nameDrug,row.stock)">
                         <!--                        <Icon color="white" height="20" icon="pepicons-pop:plus" width="20"/>-->
-                        เพิ่มยา
+                        เพิ่ม
                       </button>
                     </div>
                   </template>
@@ -262,6 +262,7 @@ export default {
       return [
         {id: 'id', title: 'ลำดับ'},
         {id: 'nameDrug', title: 'ยา'},
+        {id: 'qty', title: 'หน่วยนับ'},
         {id: 'qtyType', title: 'ประเภท'},
         {id: 'stock', title: 'จำนวนคงเหลือ'},
         {id: 'status', title: '#'},
@@ -343,6 +344,7 @@ export default {
           await getCart.getCart();
         }
       })
+
     }
 
     const deleteCart = async (id) => {

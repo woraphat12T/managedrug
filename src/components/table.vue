@@ -1,14 +1,14 @@
 <template>
 
     <thead
-      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 "
+      class="text-xs text-gray-700 uppercase bg-gray-50"
     >
       <tr>
         <th
           v-for="col in columns"
           :key="col.id"
           scope="col"
-          class="px-6 cursor-default py-3 text-center"
+          class="sticky top-0 px-6 cursor-default py-3 bg-gray-50 text-center"
         >
           {{ col.title }}
         </th>

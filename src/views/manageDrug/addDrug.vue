@@ -30,8 +30,8 @@
                     <select id="doseType"
                             v-model="doseType"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
-    block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-    dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="checkDoseType"
+       block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+         dark:focus:ring-blue-500 dark:focus:border-blue-500" @change="checkDoseType"
                     >
                       <option selected value="">เลือกหน่วยโดส</option>
                       <option value="G12">G12 : ผงรสมะนาว</option>
@@ -105,7 +105,7 @@
                      v-model="pricePerQty"
                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                      placeholder=""
-                     required type="number">
+                     required type="text">
             </div>
           </div>
           <div class="">
@@ -123,7 +123,7 @@
           <div class="flex justify-center ">
             <span class="font-medium text-sm mb-2">ยาที่มีในคลัง</span>
           </div>
-          <div class="ml-8 overflow-y-scroll" style="height: 450px">
+          <div class="ml-8 overflow-y-scroll h-[550px]">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <TableItem :columns=tableColumns :data=filteredItems>
                 <template v-slot:nameDrug="{ row }">
@@ -148,7 +148,7 @@ import {computed, onMounted, ref} from "vue";
 import TableItem from '../../components/table.vue'
 import SelectOption from "../../components/selectoption.vue";
 import axios from 'axios';
-import { useGetDrug } from "@/stores/index.js";
+import {useGetDrug} from "@/stores/index.js";
 import Swal from "sweetalert2";
 
 

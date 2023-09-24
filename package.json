@@ -17,6 +17,7 @@
     "flowbite": "^1.7.0",
     "moment": "^2.29.4",
     "pinia": "^2.1.4",
+    "socket.io-client": "^4.7.2",
     "sweetalert2": "^11.7.20",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",

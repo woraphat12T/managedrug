@@ -52,7 +52,7 @@ export const useAuthStore = defineStore("auth", {
           this.statusToken = response.status
           console.log(response.status)
         }catch (error) {
-          console.log(error.response.status)
+          // console.log(error.response.status)
         }
     },
     logout() {
