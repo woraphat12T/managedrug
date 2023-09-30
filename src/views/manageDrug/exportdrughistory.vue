@@ -159,8 +159,7 @@ export default {
       const keyword = textInput.value.toLowerCase();
       return Drug.value.filter(
           (item) =>
-              item.nameDrug.toLowerCase().includes(keyword) ||
-              item.qtyType.toLowerCase().includes(keyword)
+              item.nameDrug.toLowerCase().includes(keyword)
       );
     });
 
